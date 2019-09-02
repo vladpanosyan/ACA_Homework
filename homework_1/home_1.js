@@ -38,7 +38,7 @@
 
 // 5. Given three numbers. Find the maximum one
 
-	a>b&&a>c&&a||b>a&&b>c&&b||c>a&&c>b&&c||"there are some equal numbers"
+	a>b&&a>c&&String(a)||b>a&&b>c&&String(b)||c>a&&c>b&&String(c)||"there are some equal numbers"
 
 //*****************************************************
 
