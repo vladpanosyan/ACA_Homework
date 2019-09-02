@@ -32,7 +32,7 @@
 
 //4.  Given two numbers print 1 if one of them is divisible by the other one, otherwise print 0.
 	
-// ****************************************************
+// ***************************************************
 
 	a/b||b/a&&1||0
 
