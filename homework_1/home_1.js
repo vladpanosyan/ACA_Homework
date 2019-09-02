@@ -1,1 +1,1 @@
-var str = "Hello Homewirk";
+var str = "Hello Homework";
