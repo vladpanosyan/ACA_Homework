@@ -34,12 +34,12 @@
 	
 // ***************************************************
 
-	!(a%b) || !(b%a) && 1 || 0
+	!(a%b && b%a) && 1 || 0
 
 // 5. Given three numbers. Find the maximum one
 
 	a>b&&a>c&&String(a)||b>a&&a>c&&String(b)||String(c)
-	
+
 //*****************************************************
 
 // 6.  Given string ‘test’. Use variables and string methods and print ‘tetsetesesesesteest’
