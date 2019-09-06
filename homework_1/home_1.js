@@ -1,4 +1,4 @@
-// 1. What are the outputs of these expressions: '7' + 1 + 5 and 1 + 5 + '7' ?
+ // 1. What are the outputs of these expressions: '7' + 1 + 5 and 1 + 5 + '7' ?
 	 '715', '67'
 
 // ***************************************************
@@ -34,21 +34,20 @@
 	
 // ***************************************************
 
-	a/b||b/a&&1||0
+	!(a%b) || !(b%a) && 1 || 0
 
 // 5. Given three numbers. Find the maximum one
 
-	a>b&&a>c&&String(a)||b>a&&b>c&&String(b)||c>a&&c>b&&String(c)||"there are some equal numbers"
-
+	a>b&&a>c&&String(a)||b>a&&a>c&&String(b)||String(c)
+	
 //*****************************************************
 
 // 6.  Given string ‘test’. Use variables and string methods and print ‘tetsetesesesesteest’
 
-	let str = "test",str2 = "";
-	let str1 = str.slice(0, 2);
-	for(let i in str) {
-	  str2+=str[str.length-i-1]
-	}
-	let str3 = str1.padStart(10, 'es').concat(str.substr(1));
-	let result = str1.concat(str2, str3);
-
+let str = "test";
+let str1 = str.slice(0, 2);//te
+let str4 = str.slice(1, 3); // es
+let str2 = str[0]+str[2] + str[1] + str[3] // tset
+let str3 = str1.padStart(10, str4); // eseseseste
+let str5 = str.substr(1); // est
+let result = str1.concat(str2, str3, str5)
