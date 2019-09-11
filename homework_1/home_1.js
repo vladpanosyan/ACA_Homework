@@ -38,7 +38,7 @@
 
 // 5. Given three numbers. Find the maximum one
 
-	a>b&&a>c&&String(a)||b>a&&a>c&&String(b)||String(c)
+	a>b&&a>c&&String(a)||b>a&&a>c&&String(b)||String(c)// a>b && a>c && `${a}` || b > c && b || `${c}`
 
 //*****************************************************
 
@@ -47,7 +47,8 @@
 let str = "test";
 let str1 = str.slice(0, 2);//te
 let str4 = str.slice(1, 3); // es
-let str2 = str[0]+str[2] + str[1] + str[3] // tset
+let str2 = str[0]+str[2] + str[1] + str[3] // tset `${str[0]}${str[1]}${str[3]}`
 let str3 = str1.padStart(10, str4); // eseseseste
 let str5 = str.substr(1); // est
 let result = str1.concat(str2, str3, str5)
+    
