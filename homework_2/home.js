@@ -67,19 +67,18 @@ for(let i = 2; i < 10; i++) {
 // 2. Insert a digit and a number. Check whether the digits contains in the number or not.(don`t use string)
 {
 	function isExistDigit(digit, number) {
-    let numberClone = number;
-	  while(number !== 0) {
-	    let currentDigit = number % 10;
-      	let tempDigit = (currentDigit < 0) ? -currentDigit : currentDigit;
-	    if(digit === tempDigit) {
-	      return "YES";
-	    } else {
-	      number = (number - currentDigit) / 10;
-	    }
-	  }
-    return number === numberClone ? "yes" : "NO";
-	}
-	console.log(isExistDigit(-7, -7571));// 0, 64; 0, 0
+    while(number !== 0) {
+      let currentDigit = number % 10;
+      let tempDigit = (currentDigit < 0) ? -currentDigit : currentDigit;
+      if(digit === tempDigit) {
+        return "YES";
+      } else {
+        number = (number - currentDigit) / 10;
+      }
+    }
+    return "NO";
+  }
+    console.log(isExistDigit(-6, -647));// 0, 64; 0, 0+
 }
 
 // *********************************************************************************************************
