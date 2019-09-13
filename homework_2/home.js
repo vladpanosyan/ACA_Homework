@@ -205,7 +205,7 @@ console.log(getLongestWord(str));
 		}
 		return newStr;
 	}
-	console.log(getUniqSubstring(str));
+	console.log(getUniqSubstring(str))
 } 
 //***************************************************************************************************************
 //10. Write a function, which receives two numbers as arguments and finds all numbers between them 
@@ -236,4 +236,4 @@ function getEvenDigits(a, b ) {
   }
   return str || 'Such numbers does not exist.';
 }
-console.log(getEvenDigits(19, 42));
+console.log(getEvenDigits(19, 42))
