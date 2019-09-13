@@ -77,9 +77,9 @@ for(let i = 2; i < 10; i++) {
 	      number = (number - currentDigit) / 10;
 	    }
 	  }
-    return number === numberClone ? "YES" : "NO";
+    return number === numberClone ? "yes" : "NO";
 	}
-	console.log(isExistDigit(1, -751));// 0, 64; 0, 0
+	console.log(isExistDigit(-7, -7571));// 0, 64; 0, 0
 }
 
 // *********************************************************************************************************
@@ -189,25 +189,24 @@ console.log(getLongestWord(str));
 {
 	let str = 'there are no two words in the english language more harmful than "good job".';
 	function getUniqSubstring(str) {
-	  let newStr = '';
-	  let tempStr = '';
-	  for(let i = 0; i < str.length; i++) {
-	    for(let j = i; j < str.length; j++) {
-	      occurance = str[j].toLowerCase();
-	      if(tempStr.includes(occurance)) {
-	        if(occurance === ' ') {
-	          tempStr=`${tempStr}${occurance}`;
-	        } else {
-	          newStr = (tempStr.length >= newStr.length) ? tempStr : newStr;
-	          tempStr = '';
-	          break;
-	        };
-	      } else tempStr=`${tempStr}${occurance}`
-	    }
-	  }
- 	return newStr;
-console.log(getUniqSubstring(str));}
-
+		let newStr = '';
+		let tempStr = '';
+		for(let j = 0; j < str.length; j++) {
+			occurance = str[j].toLowerCase();
+			if(occurance === ' ') {
+				tempStr=`${tempStr} `;
+			} else if(!tempStr.includes(occurance)) {
+				tempStr=`${tempStr}${occurance}`
+			} else {
+				newStr = (tempStr.length >= newStr.length) ? tempStr : newStr;
+				let index = tempStr.indexOf(occurance);
+				tempStr = tempStr.slice(index + 1);
+				j--;
+			}
+		}
+		return newStr;
+	}
+	console.log(getUniqSubstring(str));
 } 
 //***************************************************************************************************************
 //10. Write a function, which receives two numbers as arguments and finds all numbers between them 
@@ -238,4 +237,4 @@ function getEvenDigits(a, b ) {
   }
   return str || 'Such numbers does not exist.';
 }
-console.log(getEvenDigits(-5, 33));
+console.log(getEvenDigits(19, 42));
