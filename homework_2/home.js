@@ -65,6 +65,7 @@ for(let i = 2; i < 10; i++) {
 
 // *********************************************************************************************************
 // 2. Insert a digit and a number. Check whether the digits contains in the number or not.(don`t use string)
+
 {
 	function isExistDigit(digit, number) {
     while(number !== 0) {
@@ -184,6 +185,7 @@ console.log(getLongestWord(str));
 //9. Write a function to find longest substring in a given a string without repeating characters 
 //	except space character. If there are several, return the last one. Consider that all letters are 
 //	lowercase.
+
 
 {
 	let str = 'there are no two words in the english language more harmful than "good job".';
