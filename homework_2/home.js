@@ -65,22 +65,8 @@ for(let i = 2; i < 10; i++) {
 
 // *********************************************************************************************************
 // 2. Insert a digit and a number. Check whether the digits contains in the number or not.(don`t use string)
-{
-	function isExistDigit(digit, number) {
-    let numberClone = number;
-	  while(number !== 0) {
-	    let currentDigit = number % 10;
-      	let tempDigit = (currentDigit < 0) ? -currentDigit : currentDigit;
-	    if(digit === tempDigit) {
-	      return "YES";
-	    } else {
-	      number = (number - currentDigit) / 10;
-	    }
-	  }
-    return number === numberClone ? "YES" : "NO";
-	}
-	console.log(isExistDigit(1, -751));// 0, 64; 0, 0
-}
+
+
 
 // *********************************************************************************************************
 //3. Enter a number. Reverse its first and last digits. Print the new number.
@@ -186,56 +172,8 @@ console.log(getLongestWord(str));
 //	except space character. If there are several, return the last one. Consider that all letters are 
 //	lowercase.
 
-{
-	let str = 'there are no two words in the english language more harmful than "good job".';
-	function getUniqSubstring(str) {
-	  let newStr = '';
-	  let tempStr = '';
-	  for(let i = 0; i < str.length; i++) {
-	    for(let j = i; j < str.length; j++) {
-	      occurance = str[j].toLowerCase();
-	      if(tempStr.includes(occurance)) {
-	        if(occurance === ' ') {
-	          tempStr=`${tempStr}${occurance}`;
-	        } else {
-	          newStr = (tempStr.length >= newStr.length) ? tempStr : newStr;
-	          tempStr = '';
-	          break;
-	        };
-	      } else tempStr=`${tempStr}${occurance}`
-	    }
-	  }
- 	return newStr;
-console.log(getUniqSubstring(str));}
-
-} 
 //***************************************************************************************************************
 //10. Write a function, which receives two numbers as arguments and finds all numbers between them 
 //    such that each digit of the number is even. The numbers obtained should be printed in a
 //    comma-separated sequence on a single line.
 
-function getEvenDigits(a, b ) {
-  let str = '', tempStr = '';
-  for(let i = a; i < b; i++) {
-    let curent = i;
-    while(curent !== 0) {
-      let c = curent % 10;
-      if(c % 2 === 0) {
-        tempStr = c + tempStr;
-        curent = (curent - c) / 10;
-      } else {
-        tempStr = '';
-        break;
-      }
-    }
-    if( tempStr || !i ) {
-      if(i === 0) {
-        str = `${str}${i},`
-      } else {
-        str = `${str}${tempStr},`
-      }
-    } else str = `${str}`;
-  }
-  return str || 'Such numbers does not exist.';
-}
-console.log(getEvenDigits(-5, 33));
