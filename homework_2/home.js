@@ -68,6 +68,7 @@ for(let i = 2; i < 10; i++) {
 
 {
   function isExistDigit(digit, number) {
+    let clone = number;
     while(number !== 0) {
       let currentDigit = number % 10;
       let tempDigit = (currentDigit < 0) ? -currentDigit : currentDigit;
@@ -77,7 +78,7 @@ for(let i = 2; i < 10; i++) {
         number = (number - currentDigit) / 10;
       }
     }
-    return "NO";
+    return clone === digit ? null : "NO";
   }
     console.log(isExistDigit(-6, -647));// 0, 64; 0, 0+
 }
@@ -177,7 +178,7 @@ let str = "A revolution without, dancing is a rev567tion not worth having.";
           word = '';
       } else word = `${word}${str[i]}`;
     }
-    return maxWord;
+    return word.length <= maxWord.lengt ? word : maxWord;
   }
 console.log(getLongestWord(str));
 }
