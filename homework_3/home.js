@@ -122,6 +122,7 @@ If there is more than key for that given value create an array.*/
 
 {
   function arrayInvert(obj) {
+  	console.start()
     let inctance = {};
     for(let prop in obj) {
       let key = obj[prop];
@@ -131,6 +132,7 @@ If there is more than key for that given value create an array.*/
     }
     return inctance;
   }
+  console.end();
   console.log(arrayInvert({ a: '1', b: '2', c: '2', d: '2'}));
 }
 
