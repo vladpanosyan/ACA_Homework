@@ -4,20 +4,19 @@
 
 	 {
 	 	function getNegativeMult(arr) {
-	 		if(arr.every( (item) => typeof item === 'object') ) {
-	 			let elems = arr.map((item) => {
-	 				item.sort((a, b) => a - b);
-	 				return item[0];
-	 			})
-	 			.filter((item) => item < 0);
+	 		if(arr.every( (item) => Array.isArray(item)) ) {
+	 			let elems = arr.reduce((arr, item) => {
+	 				let d = item.filter((item) => item < 0).sort((a, b) => b - a)[0];
+	 				return (d < 0) ? [...arr, d] : [...arr];
+	 			}, [])
 	 			if(elems.length) {
 	 				return elems.reduce((result, item) => result * item);
 	 			}
 	 			return `No negatives`
 	 		} 
 	 		return `Invalid Argument`; 
-	 	}	
-	 	console.log(getNegativeMult([[2, -9, -3, 0], [1, 2], [-4 , -11, 0]]));
+	 	}
+	 	console.log(getNegativeMult([[2, -9, -3, 0], [1, -2], [-4 , -11, 0]]));
     // console.log(getNegativeMult([[2,  0], [1, 2], [0]]));
 }
 
@@ -49,12 +48,11 @@ Find sum of each row and print them as an array.*/
 
 {
 	function getSumOfArrElems(arr) {
-		return arr.reduce((arr, item) => {
-			let sum = item.reduce((a, b) => a + b);
-			return [...arr, sum]
-		}, []);
+		return arr.map((item, index) => {
+			return item.reduce((a, b) => a + b);
+		});
 	}	
-	console.log(getSumOfArrElems([[1], [2], [3], [4]]));
+	console.log(getSumOfArrElems([[1,6], [2], [3], [4,-2]]));
 }
 /* 4. Given an array of integers. Write a function that return new array from first array,	
 where  removed even numbers, and odd numbers was multiplied with new array length*/
@@ -72,7 +70,6 @@ where  removed even numbers, and odd numbers was multiplied with new array lengt
 {
 	function getuniqItemsOfArray(arr) {
 		return  arr.filter( (item, index, arr) => arr.indexOf(item) === index );
-
 	}
 	console.log(foo([1, 2, 3, 3, 2, 5, 2, 2, 2]));
 }
@@ -93,33 +90,48 @@ where  removed even numbers, and odd numbers was multiplied with new array lengt
 /* 7. Given an object. Invert it (keys become values and values become keys).
 If there is more than key for that given value create an array.*/
 
+// {
+// 	function arrayInvert(obj) {
+// 		let keys = Object.keys(obj);
+// 		let arr = [];
+// 		for(let prop in obj) {
+// 			let b = {
+// 				[obj[prop]]: prop
+// 			};
+// 			arr.push(b);
+// 		}
+// 		let res = arr.reduce(function(object, item, index, arr) {
+//     //item = {key, value} destructuring doesn't work . WHY ???
+//     //for example -> console.log(key) //undefined;
+//     if(obj[keys[index]] in object) {
+//     	return {
+//     		...object,
+//     		[obj[keys[index]]]: [...object[obj[keys[index]]], keys[index]]
+//     	}
+//     }
+//     return {
+//     	...object,
+//     	[obj[keys[index]]]: keys[index]
+//     }
+// }, {});
+// 		return res;
+// 	}
+// 	console.log(arrayInvert({ a: '1', b: '2', c: '2', d: '2'}));
+// }
+
+
 {
-	function arrayInvert(obj) {
-		let keys = Object.keys(obj);
-		let arr = [];
-		for(let prop in obj) {
-			let b = {
-				[obj[prop]]: prop
-			};
-			arr.push(b);
-		}
-		let res = arr.reduce(function(object, item, index, arr) {
-    //item = {key, value} destructuring doesn't work . WHY ???
-    //for example -> console.log(key) //undefined;
-    if(obj[keys[index]] in object) {
-    	return {
-    		...object,
-    		[obj[keys[index]]]: [...object[obj[keys[index]]], keys[index]]
-    	}
+  function arrayInvert(obj) {
+    let inctance = {};
+    for(let prop in obj) {
+      let key = obj[prop];
+      if(key in inctance) {
+        inctance[key] = [...inctance[key], prop]
+      } else inctance[key] = prop
     }
-    return {
-    	...object,
-    	[obj[keys[index]]]: keys[index]
-    }
-}, {});
-		return res;
-	}
-	console.log(arrayInvert({ a: '1', b: '2', c: '2', d: '2'}));
+    return inctance;
+  }
+  console.log(arrayInvert({ a: '1', b: '2', c: '2', d: '2'}));
 }
 
 /* 8.  Given an object. Write a function that creates a deep copy of it.*/
@@ -135,7 +147,7 @@ If there is more than key for that given value create an array.*/
 	}
 
 	function deepCopy(obj) {
-		
+
 		if(typeof obj !== 'object' || obj === null) {
 			return obj;
 		} 
