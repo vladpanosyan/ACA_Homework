@@ -127,7 +127,12 @@ If there is more than key for that given value create an array.*/
     for(let prop in obj) {
       let key = obj[prop];
       if(key in inctance) {
-        inctance[key] = [...inctance[key], prop]
+		  if(Array.isArray(inctance[key])) {
+			inctance[key] = [...inctance[key], prop]
+		  } else {
+			inctance[key] = [inctance[key], prop]
+		  }
+       
       } else inctance[key] = prop
     }
     return inctance;
