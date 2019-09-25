@@ -128,11 +128,10 @@ If there is more than key for that given value create an array.*/
       let key = obj[prop];
       if(key in inctance) {
 		  if(Array.isArray(inctance[key])) {
-			inctance[key] = [...inctance[key], prop]
-		  } else {
+			  inctance[key] = [...inctance[key], prop]// 
+		} else {
 			inctance[key] = [inctance[key], prop]
 		  }
-       
       } else inctance[key] = prop
     }
     return inctance;
