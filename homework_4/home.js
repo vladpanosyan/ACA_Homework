@@ -270,7 +270,7 @@ function carCompetition(carsLimit) {
 
   return {
     cars: [],
-    addCars() {
+    addCars(minSpeed, MaxSpeed) {
       while(this.cars.length < carsLimit) {
         let index = ~~(Math.random() * carList.length);
         let car   = carList[index];
