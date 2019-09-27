@@ -239,7 +239,7 @@ class Car {
 
   start() {
     let timerId = setInterval(() => {
-      this.currentPosition+=(300 * this.speed) / 1000;
+      this.currentPosition+=Math.round((300 * this.speed) / 1000);
       if(this.currentPosition <= Car.finishPosition) {
         console.log(`${this.currentPosition} - %c${this.name}`, `color: ${this.color}`);
       } else this.stop();
@@ -249,7 +249,7 @@ class Car {
 
   stop() {
     clearInterval(this.intervalPinter);
-    if(Car.isWinner === false) {
+    if(!Car.isWinner) {
       console.log(`${this.name} has finished Race %c"W I N N E R !!!"`, `color: red`);
       Car.isWinner = true
     } else console.log(`${this.name} has finished Race`);
@@ -265,7 +265,7 @@ function carCompetition(carsLimit) {
   }
 
   const carList   = ['Audi', 'BMW', 'Jeep', 'Mercedes', 'Toyota'];
-  const speedList = [30, 40, 50, 60, 65];
+  // const speedList = [30, 40, 50, 60, 65];
   const colorList = ['#1d45e5', '#d81717', '#47e51b', '#ede623', '#b414bc'];
 
   return {
@@ -275,7 +275,7 @@ function carCompetition(carsLimit) {
         let index = ~~(Math.random() * carList.length);
         let car   = carList[index];
         if(!this.cars.find(findCar, {name: car})) {
-          let speed = speedList[index];
+          let speed = ~~((Math.random() * (MaxSpeed - minSpeed)) + minSpeed);
           let color = colorList[index];
           this.cars.push(new Car(car, color, 0, null, speed));
         }
@@ -295,7 +295,7 @@ function carCompetition(carsLimit) {
 let carGroupOne = carCompetition(3);
 // let carGroupTwo = carCompetition(4);
 
-carGroupOne.addCars(); 
+carGroupOne.addCars(21, 26); 
 // carGroupTwo.addCars(); 
 
 carGroupOne.carStarCompetition();
@@ -323,7 +323,7 @@ console.log(carGroupOne.getCars());
 
 	Car.prototype.start = function() {
 		let timerId = setInterval(() => {
-			this.currentPosition+=(300 * this.speed) / 1000;
+			this.currentPosition+=Math.round((300 * this.speed) / 1000);
 			if(this.currentPosition <= Car.finishPosition) {
 				console.log(`${this.currentPosition} - %c${this.name}`, `color: ${this.color}`);
 			} else this.stop();
@@ -333,7 +333,7 @@ console.log(carGroupOne.getCars());
 
 	Car.prototype.stop = function() {
 		clearInterval(this.intervalPinter);
-		if(Car.isWinner === false) {
+		if(!Car.isWinner) {
 			console.log(`${this.name} has finished Race %c"W I N N E R !!!"`, `color: red`);
 			Car.isWinner = true
 		} else console.log(`${this.name} has finished Race`);
@@ -348,17 +348,17 @@ console.log(carGroupOne.getCars());
 		}
 
 		const carList = ['Audi', 'BMW', 'Jeep', 'Mercedes', 'Toyota'];
-		const speedList = [30, 40, 50, 60, 65];
+		// const speedList = [30, 40, 50, 60, 65];
 		const colorList = ['#1d45e5', '#d81717', '#47e51b', '#ede623', '#b414bc'];
 
 		let cars = [];
 		return {
-			addCars() {
+			addCars(minSpeed, MaxSpeed) {
 				while(cars.length < carsLimit) {
 					let index = ~~(Math.random() * carList.length);
 					let car   = carList[index];
 					if(!cars.find(findCar, {name: car})) {
-						let speed = speedList[index];
+						let speed = ~~((Math.random() * (MaxSpeed - minSpeed)) + minSpeed);
 						let color = colorList[index];
 						cars.push(new Car(car, color, 0, null, speed));
 					}
@@ -378,7 +378,7 @@ console.log(carGroupOne.getCars());
 	let carGroupOne = carCompetition(3);
 	// let carGroupTwo = carCompetition(4);
 
-	carGroupOne.addCars(); 
+	carGroupOne.addCars(20, 50); 
 	// carGroupTwo.addCars(); 
 
 	carGroupOne.carStarCompetition();
