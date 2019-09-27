@@ -6,8 +6,8 @@
 
 class Rectangele {
   constructor(width, height) {
-    this._width = width;
-    this._height = height;
+    this.width = width;
+    this.height = height;
   }
 
   get width() {
@@ -237,9 +237,6 @@ class Car {
     this.currentPosition = 0;
   }
 
-  // test() {
-  //   console.log(Car.finishPosition);
-  // }
   start() {
     let timerId = setInterval(() => {
       this.currentPosition+=(300 * this.speed) / 1000;
@@ -258,66 +255,137 @@ class Car {
     } else console.log(`${this.name} has finished Race`);
   }
 }
-let bmw  = new Car('BMW', '#1d45e5', 0, null, 40);
-let audi = new Car('AUDI', '#d81717', 0, null, 50);
-let _06  = new Car('_06', '#47e51b', 0, null, 60);
-
-//car.start();
-// car.test();
-// car.reset();
 
 // car competition logic
-function carCompetition(...cars) {
-  console.log(cars);
-  cars.forEach((car) => car.start());
+// carsLimit is count of cars which are competitive
+function carCompetition(carsLimit) {
+
+  function findCar(car) {
+    return car.name === this.name;
+  }
+
+  const carList   = ['Audi', 'BMW', 'Jeep', 'Mercedes', 'Toyota'];
+  const speedList = [30, 40, 50, 60, 65];
+  const colorList = ['#1d45e5', '#d81717', '#47e51b', '#ede623', '#b414bc'];
+
+  return {
+    cars: [],
+    addCars() {
+      while(this.cars.length < carsLimit) {
+        let index = ~~(Math.random() * carList.length);
+        let car   = carList[index];
+        if(!this.cars.find(findCar, {name: car})) {
+          let speed = speedList[index];
+          let color = colorList[index];
+          this.cars.push(new Car(car, color, 0, null, speed));
+        }
+      }
+    },
+    getCars() {
+      return this.cars;
+    },
+    carStarCompetition(finishPosition = Car.finishPosition) {
+      Car.finishPosition = finishPosition;  
+      this.cars.forEach( car => car.reset());
+      this.cars.forEach( car => car.start());
+    }
+  }
 }
-carCompetition(bmw, audi, _06);
+
+let carGroupOne = carCompetition(3);
+// let carGroupTwo = carCompetition(4);
+
+carGroupOne.addCars(); 
+// carGroupTwo.addCars(); 
+
+carGroupOne.carStarCompetition();
+// carGroupTwo.carStarCompetition(100);
+
+console.log(carGroupOne.getCars());
 
 /*8) Write 7) with function prototype style*/
 {
 
 	function Car(name, color, currentPosition, intervalPinter, speed) {
-	  this.name            = name;
-	  this.color           = color;
-	  this.currentPosition = currentPosition;
-	  this.intervalPinter  = intervalPinter;
-	  this.speed           = speed; 
+		this.name            = name;
+		this.color           = color;
+		this.currentPosition = currentPosition;
+		this.intervalPinter  = intervalPinter;
+		this.speed           = speed; 
 	}
 
 	Car.finishPosition = 150;
 	Car.isWinner       = false;
 
 	Car.prototype.reset = function() {
-	  this.currentPosition = 0
+		this.currentPosition = 0
 	}
 
 	Car.prototype.start = function() {
-	 let timerId = setInterval(() => {
-	  this.currentPosition+=(300 * this.speed) / 1000;
-	  if(this.currentPosition <= Car.finishPosition) {
-	    console.log(`${this.currentPosition} - %c${this.name}`, `color: ${this.color}`);
-	  } else this.stop();
-	}, 300);
-	 this.intervalPinter = timerId;
+		let timerId = setInterval(() => {
+			this.currentPosition+=(300 * this.speed) / 1000;
+			if(this.currentPosition <= Car.finishPosition) {
+				console.log(`${this.currentPosition} - %c${this.name}`, `color: ${this.color}`);
+			} else this.stop();
+		}, 300);
+		this.intervalPinter = timerId;
 	}
 
 	Car.prototype.stop = function() {
-	  clearInterval(this.intervalPinter);
-	  if(Car.isWinner === false) {
-	    console.log(`${this.name} has finished Race %c"W I N N E R !!!"`, `color: red`);
-	    Car.isWinner = true
-	  } else console.log(`${this.name} has finished Race`);
+		clearInterval(this.intervalPinter);
+		if(Car.isWinner === false) {
+			console.log(`${this.name} has finished Race %c"W I N N E R !!!"`, `color: red`);
+			Car.isWinner = true
+		} else console.log(`${this.name} has finished Race`);
 	}
 
-	let bmw  = new Car('BMW', '#1d45e5', 0, null, 40);
-	let audi = new Car('AUDI', '#d81717', 0, null, 50);
-	let _06  = new Car('_06', '#47e51b', 0, null, 60);
+	// car competition logic
+	// carsLimit is count of cars which are competitive
+	function carCompetition(carsLimit) {
 
-	function carCompetition(...cars) {
-	  console.log(cars);
-	  cars.forEach((car) => car.start());
+		function findCar(car) {
+			return car.name === this.name;
+		}
+
+		const carList = ['Audi', 'BMW', 'Jeep', 'Mercedes', 'Toyota'];
+		const speedList = [30, 40, 50, 60, 65];
+		const colorList = ['#1d45e5', '#d81717', '#47e51b', '#ede623', '#b414bc'];
+
+		let cars = [];
+		return {
+			addCars() {
+				while(cars.length < carsLimit) {
+					let index = ~~(Math.random() * carList.length);
+					let car   = carList[index];
+					if(!cars.find(findCar, {name: car})) {
+						let speed = speedList[index];
+						let color = colorList[index];
+						cars.push(new Car(car, color, 0, null, speed));
+					}
+				}
+			},
+			getCars() {
+				return cars;
+			},
+			carStarCompetition(finishPosition = Car.finishPosition) {
+				Car.finishPosition = finishPosition;  
+				cars.forEach( car => car.reset());
+				cars.forEach( car => car.start());
+			}
+		}
 	}
-	carCompetition(bmw, audi, _06);
+
+	let carGroupOne = carCompetition(3);
+	// let carGroupTwo = carCompetition(4);
+
+	carGroupOne.addCars(); 
+	// carGroupTwo.addCars(); 
+
+	carGroupOne.carStarCompetition();
+	// carGroupTwo.carStarCompetition(100);
+
+	console.log(carGroupOne.getCars());
+
 }
 
 
