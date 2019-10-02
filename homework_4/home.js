@@ -53,16 +53,17 @@ the lengths of the sides of a triangle.Add a new method to the prototype called
 getPerimeter()*/
 
 let shape = {
-  type: 'Triangle',
+  type: 'shape',
   getType() {
     return this.type;
   }
 }
 // console.log(shape.getType());
 function Triangle(a, b, c) {
-  this.a = a;
-  this.b = b;
-  this.c = c;
+  this.a 	= a;
+  this.b 	= b;
+  this.c 	= c;
+  this.type = 'triangle';
   this.getPerimeter = function() {
     return this.a + this.b + this.c;
   }
@@ -70,7 +71,7 @@ function Triangle(a, b, c) {
 Triangle.prototype = Object.create(shape);
 Triangle.prototype.constructor = Triangle;
 let triangle = new Triangle(5, 10, 15);
-  
+triangle.getType();  
 /* 3) Create an Author class and a Book class.
 		Author should have: name, email, gender. 
 		It should have getters.
@@ -113,7 +114,7 @@ let proxy = new Proxy(Books, {
       get(target, prop) {
         return target[prop];
       },
-      ser(target, prop, vlaue) {
+      set(target, prop, vlaue) {
         target[prop] = value;
         return true;
       }
@@ -231,7 +232,7 @@ class Car {
     this.speed           = speed; 
   }
   static finishPosition = 200;
-  static isWinner = false;
+  static isWinner       = false;
 
   reset() {
     this.currentPosition = 0;
@@ -336,7 +337,8 @@ console.log(carGroupOne.getCars());
 		if(!Car.isWinner) {
 			console.log(`${this.name} has finished Race %c"W I N N E R !!!"`, `color: red`);
 			Car.isWinner = true
-		} else console.log(`${this.name} has finished Race`);
+		} 
+		console.log(`${this.name} has finished Race`);
 	}
 
 	// car competition logic
