@@ -93,25 +93,31 @@
 	let count = 0
 	const async1 = (cb) => {
 	    setTimeout(() => {
-	        cb(1);
+      count++;
+  		if(count === 3){
+  			 cb(1);	
+  		}
 	    }, 4000);
 	};
 	const async2 = (cb) => {
 	    setTimeout(() => {
-	        cb(13);
+        count++;
+    		if(count === 3){
+    			 cb(13);	
+    		}
 	    }, 6000);
 	};
 	const async3 = (cb) => {
 	    setTimeout(() => {
-	        cb(5);
+        count++;
+    		if(count === 3){
+    			 cb(5);	
+    		}
 	    }, 3000);
 	};
 
 	const someCallback = (val) => {
-		count++;
-		if(count === 3){
-			console.log(val);	
-		}
+    	console.log(val);
 	}
 
 	const yourXFunction = (callback, ...rest ) => {  
@@ -141,7 +147,8 @@
 
 	const async2 = new Promise((resolve, reject) => {
 		setTimeout(() => {
-	        resolve(2);
+	        // resolve(2);
+	        reject('Error in async2')
 	    }, 2000);
 	});
 
@@ -156,11 +163,14 @@
 				}    	
 			}).catch(err => {
 				counter++;
+				reject(err)
 			});
 	    })
 	});
 	let t = promiseAll([async6,async2,async4]);
-	t.then(result => console.log(result));
+	t
+	.then(result => console.log(result))
+	.catch(err => console.log(err));
 }
 
 
@@ -169,71 +179,90 @@
 	 	with observables without using promise(only with observable methods) 
 */
 
-let y = ( function() {
+{
+
 	let count = 0;
-// callbac function for async f(x)
-	async function someCallback(val) {
-		count++;
-		if(count === 3) {
-			console.log(val);
-		}
-	}
+// callback function for async f(x)
+	let someCallback = (val)=> console.log(val);
+// async Actions
 
-// async observers
-
-	function async1(cb) {
-		setTimeout(() => cb(1), 4000);
+	function async1(cb, length) {
+		setTimeout(() => {
+			// async1Ob.count++
+			// console.log(async1Ob.count);
+			count++;
+			if(count === length) {
+	 			cb(1);
+			}
+		}, 4000);
 	}
 	
-	function async2(cb) {
-		setTimeout(() => cb(13), 6000);
+	function async2(cb, length) {
+		setTimeout(() => {
+			// async2Ob.count++;
+			// console.log(async2Ob.count);
+			count++;
+			if(count === length) {
+	 			cb(13);
+			}
+		}, 6000);
 	}
 
 
-	function async3(cb) {
-		setTimeout(() => cb(5), 3000);
-	}
+	function async3(cb, length) {
+		setTimeout(() => {
+			// async3Ob.count++;
+			// console.log(async3Ob.count);
 
-	class Observerable {
-		constructor() {
-			this.observers = [];
+			count++;
+			if(count === length) {
+	 			cb(3);
+			}
+		}, 5000);
+	}
+// function which get last ended async action's value
+	let getLastAsyncVal = (callback, ...args) => {
+
+		class Observerable {
+			constructor() {
+				this.observers = [];
+			}
+
+			subscribe() {
+				this.observers.push(...args);
+			}
+
+			dispatch(callback, length = args.length) {
+				this.observers.forEach(observer => {
+					observer.notify(callback, length);
+				});
+			} 
+
+			init() {
+				this.dispatch(callback);
+			}
 		}
-
-		subscribe(observer) {
-			this.observers.push(observer);
-		}
-
-		// unsubscribe(observer) {
-		// 	this.observers.filter( obs => oserver !== obs)
-		// } 
-
-		dispatch(callback) {
-			this.observers.forEach(observer => {
-				observer.notify(callback);
-			});
-		} 
+		return new Observerable();
 	}
 
+//  observers
 	class Observer {
 
 		constructor(data) {
-			this.data = data;
+			this.asyncAction = data;
 		}
 
-		notify(callback) {
-			this.data(callback)
+		notify(callback, length) {
+			this.asyncAction(callback, length);
 		}
 	}
-
-	let observerable = new Observerable();
 
 	let async1Ob = new Observer(async1);
 	let async2Ob = new Observer(async2);
 	let async3Ob = new Observer(async3);
 
-	observerable.subscribe(async1Ob);
-	observerable.subscribe(async2Ob);
-	observerable.subscribe(async3Ob);
+	let observable = getLastAsyncVal(someCallback, async3Ob, async2Ob, async1Ob);
 
-	observerable.dispatch(someCallback);
-})();
+	observable.subscribe();
+	observable.init();
+}
