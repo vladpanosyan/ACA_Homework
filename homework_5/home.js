@@ -40,11 +40,7 @@
 /*
 	2) Why catch not work and how to fix?
  
-		new Promise(function(resolve, reject) {
-		  setTimeout(() => {
-		    throw new Error("Whoops!");
-		  }, 1000);
-		}).catch(alert);
+		 
 */
 // The reason is that when the executor function called automatically, its deployed in Call Stack data structure
 // and executed in main stream. But setTimeout callback function deployed in call Stack from EVENT LOOP and executed
