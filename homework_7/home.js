@@ -110,7 +110,7 @@ for (let item of todoList) {
 	The Fibonacci sequence is defined as follows:
 */
 function* fib() {
-	let first  = 1;
+	let first = 1;
 	let second = 1;
 	while (true) {
 		let current = second;
@@ -135,20 +135,30 @@ console.log(fibGen.next().value);
 
 async function* getLastResult(...promises) {
 	let length = promises.length;
-	let arr = [];
+	let arrIndex = [];
+	let arrPromisesResult = []
+	promises.forEach((item, index) => {
+		item.then(_ => {
+			arrIndex.push(index)
+		})
+	})
+
 	for (let i = 0; i < length; i++) {
-		arr.push(await promises[i]);
+		arrPromisesResult.push(await promises[i])
+		if (arrPromisesResult.length === length) {
+			for (let j = length - 1; j >= 0; j--) {
+				yield arrPromisesResult[arrIndex[j]]
+			}
+		}
 	}
-	arr.sort((a, b) => b - a)
-	for (let item of arr) yield item;
 }
 
 (async () => {
 	const promise1 = new Promise(resolve => setTimeout(_ => resolve(10), 1000))
 	const promise2 = new Promise(resolve => setTimeout(_ => resolve(30), 3000))
 	const promise3 = new Promise(resolve => setTimeout(_ => resolve(20), 2000))
-	let genPromise = getLastResult(promise1, promise2, promise3)
-	for await (let value of genPromise) {
+	let t = getLastResult(promise1, promise2, promise3)
+	for await (let value of t) {
 		console.log(value);
 	}
 })()
